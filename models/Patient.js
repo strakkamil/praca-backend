@@ -34,10 +34,12 @@ const patientSchema = mongoose.Schema({
     type: String
   },
   visits: {
-    type: Array
+    type: Array,
+    default: []
   },
   tests: {
-    type: Array
+    type: Array,
+    default: []
   }
 })
 

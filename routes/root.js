@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
 })
 
 router.get('/', auth, (req, res) => {
-  res.json({ isAccess: true })
+  res.json({ role: 'root', isAccess: true })
 })
 
 // router.post('/register', async (req, res) => {
