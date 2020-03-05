@@ -16,10 +16,6 @@ mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopo
   console.log('Połączono z bazą danych medicalclinic')
 })
 
-app.get('/', (req, res) => {
-  res.send('hehe')
-})
-
 app.use('/receptionist', receptionistRoute)
 app.use('/root', rootRoute)
 app.use('/patient', patientRoute)
