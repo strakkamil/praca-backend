@@ -46,11 +46,34 @@ router.post('/login', async (req, res) => {
   if (!validPassword) return res.status(400).send('Złe hasło')
 
   const token = jwt.sign({ _id: patient._id }, process.env.TOKEN_SECRET)
-  res.header('authorization', token).send(token)
+  res.header('authorization', token)
+  res.header('id', patient._id).json({ "token": token, "id": patient._id })
 })
 
 router.get('/', auth, (req, res) => {
   res.json({ role: 'patient', isAccess: true })
+})
+
+router.get('/edit/:id', auth, (req, res) => {
+  Patient.findById(req.params.id)
+    .then(patient => res.json(patient))
+    .catch(err => res.status(400).json(`Error: ${err}`))
+})
+
+router.patch('/edit/:id', (req, res) => {
+  const id = req.params.id
+  Patient.updateOne({ _id: id }, {
+    $set: {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      phone: req.body.phone,
+      pesel: req.body.pesel,
+      city: req.body.city,
+      street: req.body.street
+    }
+  })
+    .then(res => console.log('Zmodyfikowano'))
 })
 
 module.exports = router
