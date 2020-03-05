@@ -5,6 +5,7 @@ const cors = require('cors')
 const receptionistRoute = require('./routes/receptionist')
 const rootRoute = require('./routes/root')
 const patientRoute = require('./routes/patient')
+const doctorRoute = require('./routes/doctor')
 
 const port = process.env.PORT || 5000
 
@@ -19,6 +20,7 @@ mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopo
 app.use('/receptionist', receptionistRoute)
 app.use('/root', rootRoute)
 app.use('/patient', patientRoute)
+app.use('/doctor', doctorRoute)
 
 app.listen(port, () => {
   console.log(`Serwer nasłuchuje na porcie: ${port}`)

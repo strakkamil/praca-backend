@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const doctorSchema = mongoose.Schema({
   role: {
     type: String,
-    default: 'patient'
+    default: 'doctor'
   },
   firstname: {
     type: String,
@@ -40,5 +40,10 @@ const doctorSchema = mongoose.Schema({
   tests: {
     type: Array,
     default: []
+  },
+  specialization: {
+    type: String
   }
 })
+
+module.exports = mongoose.model('doctors', doctorSchema)

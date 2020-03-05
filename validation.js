@@ -54,8 +54,26 @@ const loginPatient = data => {
   return schema.validate(data)
 }
 
+const registerDoctor = data => {
+  const schema = Joi.object({
+    firstname: Joi.string().min(3).max(50).required(),
+    lastname: Joi.string().min(3).max(50).required(),
+    email: Joi.string().min(6).required().email(),
+    phone: Joi.number().required(),
+    pesel: Joi.number().required(),
+    city: Joi.string().min(3).required(),
+    street: Joi.string().min(3).required(),
+    password: Joi.string().min(8).required(),
+    visits: Joi.array(),
+    tests: Joi.array(),
+    specialization: Joi.string()
+  })
+  return schema.validate(data)
+}
+
 module.exports.registerReceptionist = registerReceptionist
 module.exports.loginReceptionist = loginReceptionist
 module.exports.loginRoot = loginRoot
 module.exports.registerPatient = registerPatient
 module.exports.loginPatient = loginPatient
+module.exports.registerDoctor = registerDoctor
