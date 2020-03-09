@@ -43,4 +43,10 @@ router.post('/register', async (req, res) => {
   }
 })
 
+router.delete('/delete/:id', (req, res) => {
+  Doctor.findByIdAndDelete(req.params.id)
+    .then(() => res.json('Usunięto lekarza'))
+    .catch(err => console.log(`Error: ${err}`))
+})
+
 module.exports = router
