@@ -58,7 +58,7 @@ router.get('/', auth, (req, res) => {
   res.json({ role: 'admin', isAccess: true })
 })
 
-router.get('/edit/:id', auth, (req, res) => {
+router.get('/edit/:id', (req, res) => {
   Receptionist.findById(req.params.id)
     .then(receptionist => res.json(receptionist))
     .catch(err => res.status(400).json(`Error: ${err}`))

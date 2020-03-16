@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const { registerDoctor, loginDoctor } = require('../validation')
 const auth = require('./auth')
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
   Doctor.find()
     .then(doctor => res.json(doctor))
     .catch(err => res.status(400).send(`Error: ${err}`))
@@ -47,6 +47,29 @@ router.delete('/delete/:id', (req, res) => {
   Doctor.findByIdAndDelete(req.params.id)
     .then(() => res.json('Usunięto lekarza'))
     .catch(err => console.log(`Error: ${err}`))
+})
+
+router.get('/edit/:id', auth, (req, res) => {
+  Doctor.findById(req.params.id)
+    .then(doctor => res.json(doctor))
+    .catch(err => res.status(400).json(`Error: ${err}`))
+})
+
+router.patch('/edit/:id', auth, (req, res) => {
+  const id = req.params.id
+  Doctor.updateOne({ _id: id }, {
+    $set: {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      phone: req.body.phone,
+      pesel: req.body.pesel,
+      city: req.body.city,
+      street: req.body.street,
+      specialization: req.body.specialization
+    }
+  })
+    .then(res => console.log('Zmodyfikowano'))
 })
 
 module.exports = router
