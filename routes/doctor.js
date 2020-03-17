@@ -11,6 +11,12 @@ router.get('/', (req, res) => {
     .catch(err => res.status(400).send(`Error: ${err}`))
 })
 
+router.get('/main', (req, res) => {
+  Doctor.find().limit(3)
+    .then(doctor => res.json(doctor))
+    .catch(err => res.status(400).send(`Error: ${err}`))
+})
+
 router.post('/register', async (req, res) => {
   const { error } = registerDoctor(req.body)
   if (error) return res.status(400).send(error.details[0].message)
