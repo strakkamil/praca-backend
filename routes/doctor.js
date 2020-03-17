@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const { registerDoctor, loginDoctor } = require('../validation')
 const auth = require('./auth')
 
-router.get('/', auth, (req, res) => {
+router.get('/', (req, res) => {
   Doctor.find()
     .then(doctor => res.json(doctor))
     .catch(err => res.status(400).send(`Error: ${err}`))
@@ -41,6 +41,24 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     res.status(400).send(error)
   }
+})
+
+router.post('/login', async (req, res) => {
+  const { error } = loginDoctor(req.body)
+  if (error) return res.status(404).send(error.details[0].message)
+
+  const doctor = await Doctor.findOne({ email: req.body.email })
+  if (!doctor) return res.status(404).send(`${req.body.email} nie znajduje się w bazie`)
+  const validPassword = await bcrypt.compare(req.body.password, doctor.password)
+  if (!validPassword) return res.status(400).send('Złe hasło')
+
+  const token = jwt.sign({ _id: doctor._id }, process.env.TOKEN_SECRET)
+  res.header('authorization', token)
+  res.header('id', doctor._id).json({ "token": token, "id": doctor._id })
+})
+
+router.get('/login', auth, (req, res) => {
+  res.json({ role: 'doctor', isAccess: true })
 })
 
 router.delete('/delete/:id', (req, res) => {
