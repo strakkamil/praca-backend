@@ -6,6 +6,7 @@ const receptionistRoute = require('./routes/receptionist')
 const rootRoute = require('./routes/root')
 const patientRoute = require('./routes/patient')
 const doctorRoute = require('./routes/doctor')
+const visitRoute = require('./routes/visit')
 
 const port = process.env.PORT || 5000
 
@@ -21,6 +22,7 @@ app.use('/receptionist', receptionistRoute)
 app.use('/root', rootRoute)
 app.use('/patient', patientRoute)
 app.use('/doctor', doctorRoute)
+app.use('/visit', visitRoute)
 
 app.listen(port, () => {
   console.log(`Serwer nasłuchuje na porcie: ${port}`)
