@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/main', (req, res) => {
-  Doctor.find().limit(3)
+  Doctor.find().limit(5)
     .then(doctor => res.json(doctor))
     .catch(err => res.status(400).send(`Error: ${err}`))
 })
