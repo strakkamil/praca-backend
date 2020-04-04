@@ -15,6 +15,9 @@ const visitSchema = mongoose.Schema({
   },
   date: {
     type: Date
+  },
+  hour: {
+    type: Date
   }
 })
 
