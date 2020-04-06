@@ -28,6 +28,7 @@ router.post('/add', auth, async (req, res) => {
   const selectedDate = req.body.selectedDate
   const selectedStartTime = req.body.selectedStartTime
   const selectedEndTime = req.body.selectedEndTime
+  const specialization = req.body.specialization
   const visits = []
   for (let i = selectedStartTime; i < selectedEndTime; i += 1200000) {
     const visit = {
@@ -36,7 +37,8 @@ router.post('/add', auth, async (req, res) => {
       patientId: '',
       price: 150,
       date: selectedDate,
-      hour: i
+      hour: i,
+      specialization: specialization
     }
     visits.push(visit)
   }
@@ -53,6 +55,17 @@ router.get('/doctor/:id', auth, (req, res) => {
   Visit.find({ doctorId: req.params.id })
     .then(visits => res.json(visits))
     .catch(err => res.status(400).send(`Error: ${err}`))
+})
+
+router.patch('/signup/:id', auth, (req, res) => {
+  const id = req.params.id
+  const patientId = req.body.patientId
+  Visit.updateOne({ _id: id }, {
+    $set: {
+      patientId: patientId
+    }
+  })
+    .then(res => console.log('Zmodyfikowano'))
 })
 
 

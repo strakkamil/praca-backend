@@ -18,6 +18,9 @@ const visitSchema = mongoose.Schema({
   },
   hour: {
     type: Date
+  },
+  specialization: {
+    type: String
   }
 })
 
