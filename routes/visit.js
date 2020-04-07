@@ -68,5 +68,11 @@ router.patch('/signup/:id', auth, (req, res) => {
     .then(res => console.log('Zmodyfikowano'))
 })
 
+router.get('/patient/:id', auth, (req, res) => {
+  Visit.find({ patientId: req.params.id })
+    .then(visits => res.json(visits))
+    .catch(err => res.status(400).send(`Error: ${err}`))
+})
+
 
 module.exports = router
