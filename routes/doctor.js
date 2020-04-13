@@ -11,6 +11,12 @@ router.get('/', (req, res) => {
     .catch(err => res.status(400).send(`Error: ${err}`))
 })
 
+router.get('/get/:id', auth, (req, res) => {
+  Doctor.find({ _id: req.params.id })
+    .then(doctor => res.json(doctor))
+    .catch(err => res.status(400).send(`Error: ${err}`))
+})
+
 router.get('/main', (req, res) => {
   Doctor.find().limit(5)
     .then(doctor => res.json(doctor))

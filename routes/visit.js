@@ -74,5 +74,22 @@ router.get('/patient/:id', auth, (req, res) => {
     .catch(err => res.status(400).send(`Error: ${err}`))
 })
 
+router.get('/:id', auth, (req, res) => {
+  Visit.find({ _id: req.params.id })
+    .then(visit => res.json(visit))
+    .catch(err => res.status(400).send(`Error: ${err}`))
+})
+
+router.patch('/edit/:id', auth, (req, res) => {
+  const id = req.params.id
+  const description = req.body.description
+  Visit.updateOne({ _id: id }, {
+    $set: {
+      description
+    }
+  })
+    .then(res => console.log('Zmodyfikowano'))
+})
+
 
 module.exports = router
