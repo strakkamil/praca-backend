@@ -57,7 +57,7 @@ router.get('/doctor/:id', auth, (req, res) => {
     .catch(err => res.status(400).send(`Error: ${err}`))
 })
 
-router.patch('/signup/:id', auth, (req, res) => {
+router.patch('/signup/:id', (req, res) => {
   const id = req.params.id
   const patientId = req.body.patientId
   Visit.updateOne({ _id: id }, {
@@ -66,6 +66,7 @@ router.patch('/signup/:id', auth, (req, res) => {
     }
   })
     .then(res => console.log('Zmodyfikowano'))
+    .catch(err => res.status(400).send(`Error: ${err}`))
 })
 
 router.get('/patient/:id', auth, (req, res) => {
@@ -89,6 +90,18 @@ router.patch('/edit/:id', auth, (req, res) => {
     }
   })
     .then(res => console.log('Zmodyfikowano'))
+})
+
+router.patch('/cancel/:id', auth, (req, res) => {
+  const id = req.params.id
+  const patientId = req.body.patientId
+  Visit.updateOne({ _id: id }, {
+    $set: {
+      patientId: patientId
+    }
+  })
+    .then(res => console.log('Zmodyfikowano'))
+    .catch(err => res.status(400).send(`Error: ${err}`))
 })
 
 
