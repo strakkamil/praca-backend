@@ -97,7 +97,8 @@ router.patch('/cancel/:id', auth, (req, res) => {
   const patientId = req.body.patientId
   Visit.updateOne({ _id: id }, {
     $set: {
-      patientId: patientId
+      patientId: patientId,
+      description: ''
     }
   })
     .then(res => console.log('Zmodyfikowano'))
